@@ -6,13 +6,13 @@ from datetime import datetime
 
 import allure
 import requests
-from git import Repo, repo
+
 from pytest import fixture, hookimpl
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from webdriver_manager.firefox import GeckoDriverManager
 
-from globals.dir_global import ROOT_DIR
+
 from pages.about_page import AboutPage
 from pages.forgot_password_page import ForgotPasswordPage
 from pages.login_page import LoginPage
