@@ -10,6 +10,7 @@ import requests
 from pytest import fixture, hookimpl
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.firefox.service import Service
 from webdriver_manager.firefox import GeckoDriverManager
 
 
@@ -103,7 +104,9 @@ def create_driver(write_allure_environment, prep_properties, request):
         driver = webdriver.Chrome(options=chrome_options)
 
     elif browser == "firefox":
-        driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
+        service = Service(executable_path=GeckoDriverManager().install())
+        driver = webdriver.Firefox(service=service)
+      #  driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
 
     driver.maximize_window()
 
@@ -114,34 +117,37 @@ def create_driver(write_allure_environment, prep_properties, request):
     driver.find_element(By.XPATH,"//div[@id='cookiescript_accept']").click()
     driver.implicitly_wait(5)
     yield
-    if request.node.rep_call.failed:
-        window_count = len(driver.window_handles)
-        if window_count == 1:
-            allure.attach(body=capture_full_page_screenshot(), name="Full Page Screenshot",
-                          attachment_type=allure.attachment_type.PNG)
-            allure.attach(body=driver.current_url, name="URL", attachment_type=allure.attachment_type.URI_LIST)
-        else:
-            for window in range(window_count):
-                driver.switch_to.window(driver.window_handles[window])
-                allure.attach(body=capture_full_page_screenshot(), name=f"Full Page Screen Shot of window in "
-                                                                        f"index {window}",
+    if  browser == "firefox":
+        driver.quit()
+    else:
+        if request.node.rep_call.failed:
+            window_count = len(driver.window_handles)
+            if window_count == 1:
+                allure.attach(body=capture_full_page_screenshot(), name="Full Page Screenshot",
                               attachment_type=allure.attachment_type.PNG)
-                allure.attach(body=driver.current_url, name=f"URL of window in index {window}",
-                              attachment_type=allure.attachment_type.URI_LIST)
-    allure.attach(body=get_public_ip(), name="public ip address", attachment_type=allure.attachment_type.TEXT)
-    allure.attach(body=json.dumps(driver.get_cookies(), indent=4), name="Cookies",
-                  attachment_type=allure.attachment_type.JSON)
-    allure.attach(body=json.dumps(
-        {item[0]: item[1] for item in driver.execute_script("return Object.entries(sessionStorage);")}, indent=4),
-        name="Session Storage", attachment_type=allure.attachment_type.JSON)
-    allure.attach(body=json.dumps(
-        {item[0]: item[1] for item in driver.execute_script("return Object.entries(localStorage);")}, indent=4),
-        name="Local Storage", attachment_type=allure.attachment_type.JSON)
-    allure.attach(body=json.dumps(driver.get_log("browser"), indent=4), name="Console Logs",
-                  attachment_type=allure.attachment_type.JSON)
-    allure.attach(body=json.dumps(attach_network_logs(), indent=4), name="Network Logs",
-                  attachment_type=allure.attachment_type.JSON)
-    driver.quit()
+                allure.attach(body=driver.current_url, name="URL", attachment_type=allure.attachment_type.URI_LIST)
+            else:
+                for window in range(window_count):
+                    driver.switch_to.window(driver.window_handles[window])
+                    allure.attach(body=capture_full_page_screenshot(), name=f"Full Page Screen Shot of window in "
+                                                                            f"index {window}",
+                                  attachment_type=allure.attachment_type.PNG)
+                    allure.attach(body=driver.current_url, name=f"URL of window in index {window}",
+                                  attachment_type=allure.attachment_type.URI_LIST)
+        allure.attach(body=get_public_ip(), name="public ip address", attachment_type=allure.attachment_type.TEXT)
+        allure.attach(body=json.dumps(driver.get_cookies(), indent=4), name="Cookies",
+                      attachment_type=allure.attachment_type.JSON)
+        allure.attach(body=json.dumps(
+            {item[0]: item[1] for item in driver.execute_script("return Object.entries(sessionStorage);")}, indent=4),
+            name="Session Storage", attachment_type=allure.attachment_type.JSON)
+        allure.attach(body=json.dumps(
+            {item[0]: item[1] for item in driver.execute_script("return Object.entries(localStorage);")}, indent=4),
+            name="Local Storage", attachment_type=allure.attachment_type.JSON)
+        allure.attach(body=json.dumps(driver.get_log("browser"), indent=4), name="Console Logs",
+                      attachment_type=allure.attachment_type.JSON)
+        allure.attach(body=json.dumps(attach_network_logs(), indent=4), name="Network Logs",
+                      attachment_type=allure.attachment_type.JSON)
+        driver.quit()
 
 
 @hookimpl(tryfirst=True, hookwrapper=True)

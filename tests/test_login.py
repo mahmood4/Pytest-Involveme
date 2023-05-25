@@ -13,7 +13,7 @@ users = [
 @allure.severity(allure.severity_level.BLOCKER)
 @allure.epic("Security")
 @allure.feature("Login")
-@pytest.mark.security
+#@pytest.mark.security
 class TestLogin(BaseTest):
 
     @allure.description("invalid login")
