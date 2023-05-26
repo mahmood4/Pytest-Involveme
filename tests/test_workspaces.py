@@ -5,6 +5,7 @@ from assertpy import assert_that
 from helper_enums.status_enum import StatusEnum
 from tests.test_base import BaseTest
 
+
 @pytest.mark.skip
 # performs login operation
 def login(prep_properties, pages):
