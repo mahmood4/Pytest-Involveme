@@ -107,7 +107,7 @@ def create_driver(write_allure_environment, prep_properties, request):
         service = Service(executable_path=GeckoDriverManager().install())
         driver = webdriver.Firefox(service=service)
       #  driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
-        ### Updating the Code for Firefox
+        ### Updating the Code for Firefox hdhhdhdhhdh
     driver.maximize_window()
 
 
