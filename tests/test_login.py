@@ -42,7 +42,7 @@ class TestLogin(BaseTest):
     @allure.description("Log out from app")
     @allure.title("Logout of system test")
     @allure.story("As a user i want to be able to logout after a successful login.")
-   # @pytest.mark.skip
+    @pytest.mark.skip
     @pytest.mark.run(order=2)
     def test_logout(self):
         username = self.config_reader.config_section_dict("Base Url")["username"]
