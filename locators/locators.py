@@ -135,9 +135,9 @@ class SearchTransferLocators:
 
 
 class SearchTabsLocators:
-    hotels_tab = (By.XPATH, "//button[@data-bs-target='#hotels']")
+    hotels_tab = (By.XPATH, "//button[@data-bs-reports='#hotels']")
    # flights_tab = (By.XPATH, "//a[@data-name='flights']")
-    flights_tab = (By.XPATH,"//button[@data-bs-target='#flights']")
+    flights_tab = (By.XPATH,"//button[@data-bs-reports='#flights']")
     #flights_tab = (By.XPATH, "//i[@class='la la-plane mx-1']")
     tours_tab = (By.XPATH, "//a[@data-name='tours']")
     transfer_tab = (By.XPATH, "//a[@data-name='cars']")
@@ -146,7 +146,7 @@ class SearchTabsLocators:
 
 class SearchResultsLocators:
     search_title = (By.XPATH, "//span[@class='text-primary']")
-    change_search_btn = (By.XPATH, "//button[@data-target='#change-search']")
+    change_search_btn = (By.XPATH, "//button[@data-reports='#change-search']")
 
 
 class UserAccountLocators:

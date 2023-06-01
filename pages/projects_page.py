@@ -20,7 +20,7 @@ class ProjectsPage(TopNavigateBar):
     _RENAME_WORKSPACE_BUTTON = (By.XPATH,"//button[@class='block pr-4 pl-4 w-full text-sm leading-loose text-left hover:bg-gray-100 hover:text-gray-800']")
     #_DELETE_WORKSPACE_BUTTON = (By.CSS_SELECTOR, ".mr-3 .text-red-600")
     _DELETE_WORKSPACE_BUTTON = (By.XPATH,"//button[@class ='block pr-4 pl-4 w-full text-sm leading-loose text-left text-red-600 hover:bg-red-600 hover:text-white disabled:text-gray-600 disabled:bg-white disabled:cursor-not-allowed']")
-    _RENAME_FIELD = (By.CSS_SELECTOR, ".vue-portal-target input")
+    _RENAME_FIELD = (By.CSS_SELECTOR, ".vue-portal-reports input")
     _CONFIRMATION_BUTTON = (By.CSS_SELECTOR, "#confirm-create-button")
     _NEW_WORKSPACE_NAME_FIELD = (By.CSS_SELECTOR, "[placeholder='Workspace name']")
    # _DELETE_WORKSPACE_FIELD = (By.CSS_SELECTOR, ".h-12")
